@@ -108,12 +108,14 @@ how much love we put into giving.
                                     }
                                 }
                                 .onEnded { _ in
-                                    if buttonOffset > buttonWidth / 2 {
-                                        buttonOffset = buttonWidth - 80
-                                        isOnboardingViewActive = false
-                                    }
-                                    else {
-                                        buttonOffset = 0
+                                    withAnimation(Animation.easeOut(duration: 0.4)) {
+                                        if buttonOffset > buttonWidth / 2 {
+                                            buttonOffset = buttonWidth - 80
+                                            isOnboardingViewActive = false
+                                        }
+                                        else {
+                                            buttonOffset = 0
+                                        }
                                     }
                                 }
                         ) //: GESTURE

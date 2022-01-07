@@ -12,6 +12,7 @@ struct HomeView: View {
     //MARK: - Property
     
     @AppStorage("onboarding") var isOnboardingViewActive: Bool = false
+    @State private var isAnimating: Bool = false
     
     var body: some View {
         VStack(spacing: 20) {
@@ -26,6 +27,12 @@ struct HomeView: View {
                     .resizable()
                     .scaledToFit()
                 .padding()
+                .offset(y: isAnimating ? 35 : -35)
+                .animation(
+                    Animation
+                        .easeIn(duration: 4)
+                        .repeatForever()
+                    , value: isAnimating)
             }
             
             //MARK: - Center
@@ -42,6 +49,9 @@ struct HomeView: View {
             Spacer()
             
             Button {
+                withAnimation {
+                    isOnboardingViewActive = true
+                }
                 isOnboardingViewActive = true
             } label: {
                 Image(systemName: "arrow.triangle.2.circlepath.circle.fill")
@@ -56,6 +66,11 @@ struct HomeView: View {
             .controlSize(.large)
 
         }//: VStack
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                isAnimating = true
+            }
+        }
     }
 }
 
